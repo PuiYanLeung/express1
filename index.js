@@ -5,32 +5,41 @@ require("dotenv").config();
 
 const app = express();
 const port = process.env.PORT || 5000;
-const saltRound = 10;
+const saltRounds = 10;
 app.use(express.json()); // This ensures input is considered to be json
 
 app.get("/", (req, res) =>{
     res.status(200).send("Hello world");
 });
 
-app.post("/register", (req, res)=>{
-    bcrypt.genSalt(saltRound, (err, salt)=>{
-        if (err){
-            res.status(500).json({"message": `Something went wrong`, "error": err});
-        }
-        bcrypt.hash(req.body.password, salt, (err, hash)=>{
-            if (err){
-                res.status(500).json({"message": `Something went wrong`, "error": err});
-            }
+app.post("/register", async (req, res)=>{
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hash = await bcrypt.hash(req.body.password, salt);
+    
+    if (await bcrypt.compare(req.body.checkPassword, hash)){
+        res.status(201).json({"message": `Password is: ${req.body.checkPassword} matches ${hash}`});
+    }else{
+        res.status(401).json({"message": `Password ${req.body.checkPassword} does not match ${hash}`});
+    }
+
+    // bcrypt.genSalt(saltRounds, (err, salt)=>{
+    //     if (err){
+    //         res.status(500).json({"message": `Something went wrong`, "error": err});
+    //     }
+    //     bcrypt.hash(req.body.password, salt, (err, hash)=>{
+    //         if (err){
+    //             res.status(500).json({"message": `Something went wrong`, "error": err});
+    //         }
             
-            bcrypt.compare(req.body.checkPassword, hash, (err, result)=>{
-                if (result){
-                    res.status(201).json({"message": `Password is: ${req.body.checkPassword} matches ${hash}`});
-                }else{
-                    res.status(401).json({"message": `Password ${req.body.checkPassword} does not match ${hash}`});
-                }
-            });            
-        });    
-    });  
+    //         bcrypt.compare(req.body.checkPassword, hash, (err, result)=>{
+    //             if (result){
+    //                 res.status(201).json({"message": `Password is: ${req.body.checkPassword} matches ${hash}`});
+    //             }else{
+    //                 res.status(401).json({"message": `Password ${req.body.checkPassword} does not match ${hash}`});
+    //             }
+    //         });            
+    //     });    
+    // });  
 });
 
 app.get("/about", (req, res) =>{

@@ -4,10 +4,10 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const { connection } = require("./db");
 const { addUsers, listUsers } = require("./utils/user");
+const saltRounds = 10;
 
 const app = express();
 const port = process.env.PORT || 5000;
-const saltRounds = 10;
 
 app.use(express.json()); // This ensures input is considered to be json
 

@@ -18,7 +18,17 @@ const listUsers = async() => {
     }
 }
 
+const editUser = async(oldName, newName) => { //add Pui 202109011122
+    try {
+        const user = await User.update( {name: newName}, {where: {name: oldName}}); //add Pui 202109011122
+        console.log(`Edited: ${user} user`);
+    } catch(error) {
+        console.log(error);
+    }
+}
+
 module.exports = {
     addUser,
-    listUsers
+    listUsers,
+    editUser
 };

@@ -22,11 +22,11 @@ router.post("/register", async(req, res) => {
 
     const salt = await bcrypt.genSalt(saltRounds);
     const hash = await bcrypt.hash(req.body.password, salt);
-
-    await addUser(req.body.name, hash);
+//add Pui 202109011122
+    await addUser(req.body.name, hash, req.body.first_name, req.body.last_name, req.body.last_name, req.body.email, req.body.membership);
     res.status(201).json({"msg": "Created user"});
     // User entered two different passwords
-    /*if (await bcrypt.compare(req.body.checkPassword, hash)) {
+    /*if (await bcrypt.compare(req.body.checkPassword, hcdash)) {
         res.status(201).json({"message": `Password ${req.body.checkPassword} matches ${hash}`});
     } else {
         res.status(401).json({"message": `Password ${req.body.checkPassword} does not match ${hash}`});

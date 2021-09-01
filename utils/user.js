@@ -1,8 +1,8 @@
 const User = require("../models/user");
 
-const addUser = async(name, passwordHash) => {
+const addUser = async(name, passwordHash, first_name, last_name, email, membership) => { //add Pui 202109011122
     try {
-        const newUser = await User.build({name, passwordHash});
+        const newUser = await User.build({name, passwordHash, first_name, last_name, email, membership}); //add Pui 202109011122
         newUser.save();
     } catch(error) {
         console.log(error);

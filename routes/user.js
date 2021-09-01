@@ -21,7 +21,7 @@ router.post("/register", async(req, res) => {
     }
 
     const salt = await bcrypt.genSalt(saltRounds);
-    const hash = cbcrypt.hash(req.body.password, salt);
+    const hash = await bcrypt.hash(req.body.password, salt);
 
     await addUser(req.body.name, hash);
     res.status(201).json({"msg": "Created user"});

@@ -1,18 +1,9 @@
 const User = require("../models/user");
 
-const addUser = async(name, passwordHash, first_name, last_name, email, membership) => { //add Pui 202109011122
-    try {
-        const newUser = await User.build({name, passwordHash, first_name, last_name, email, membership}); //add Pui 202109011122
-        await newUser.save();
-    } catch(error) {
-        console.log(error);
-    }
-}
-
 const listUsers = async() => {
     try {
         return await User.findAll({
-            attributes: ["name", "first_name", "last_name", "email"]
+            attributes: [ "email"]
         });
     } catch(error) {
         console.log(error);
@@ -24,7 +15,7 @@ const listUsers = async() => {
 const findOneUser = async(id) => {
     try {
         const user = await User.findOne({
-            attributes: ["name", "first_name", "last_name", "email"],
+            attributes: [ "email"],
             where: {id}
         });
         return user;
@@ -37,10 +28,10 @@ const findOneUser = async(id) => {
 }
 
 //edit User
-const editUser = async(id, newName) => { 
+const editUser = async(id, newEmail) => { 
 
         const user = await User.update(
-            {name: newName},
+            {name: newEmail},
             {where: {id}}
         );
 
@@ -49,7 +40,7 @@ const editUser = async(id, newName) => {
         if(user.length === 1 && user.every(noResult)){
             throw new Error("No user edited!");
         }        
-        console.log(`Edited: ${user} user ${newName}`);
+        console.log(`Edited: ${user} user ${newEmail}`);
 
 }
 
@@ -66,7 +57,6 @@ const removeUser = async(id) => {
 }
 
 module.exports = {
-    addUser,
     listUsers,
     findOneUser,
     editUser,

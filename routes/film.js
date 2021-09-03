@@ -8,14 +8,13 @@ router.get("/movie", async(req, res)=>{
 });
 
 router.get("/:idmovie", async (req, res)=>{
-
     console.log(req.params.id);
     res.status(200).json({"message":await findfilm(req.params.id)});
 });
 
 
 router.post("/addmovie", async(req, res) => {
-    await addfilm(req.body.name);
+    await addfilm(req, res);
     res.status(201).json({"message": "Created a movie"});
 });
    
@@ -32,7 +31,7 @@ router.put("/editfilm", async (req, res) => {
   /* Delete replace value */
 router.delete("/deletemovie", async (req, res) => {
     try {
-        await removefilm(req.body.id);
+        await removefilm(req.body.name);
         res.status(200).json({"message": "movie deleted"});
     } catch (err) {
       res.status(404).json({ "message": "movie does not exist" });

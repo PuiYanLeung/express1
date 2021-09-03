@@ -1,8 +1,8 @@
 const Film = require("../models/film");
 
-const addfilm = async(name, genre, lang, year, duration, director, rating, userid) => {
+const addfilm = async(req, res) => {
     try {
-        const newfilm = await Film.build({name, genre, lang, year, duration, director, rating, userid}); 
+        const newfilm = await Film.build({ name: req.body.name, genre: req.body.genre,lang:  req.body.lang, year: req.body.year, duration: req.body.duration,director: req.body.director, rating: req.body.rating,}); 
         await newfilm.save();
     } catch(error) {
         console.log(error);
@@ -12,7 +12,7 @@ const addfilm = async(name, genre, lang, year, duration, director, rating, useri
 const listfilms = async() => {
     try {
         return await Film.findAll({
-            attributes: ["name","genre", "lang", "year", "duration", "director", "rating", "userid"]
+            attributes: ({ name: req.body.name, genre: req.body.genre,lang:  req.body.lang, year: req.body.year, duration: req.body.duration,director: req.body.director, rating: req.body.rating,})
         });
     } catch(error) {
         console.log(error);
@@ -24,7 +24,7 @@ const listfilms = async() => {
 const findfilm = async(id) => {
     try {
         const film = await Film.findOne({
-            attributes: ["name", "genre", "lang", "year", "duration", "director", "rating", "userid"],
+            attributes: ["name", "genre", "lang", "year", "duration", "director", "rating",],
             where: {id}
         });
         return film;
@@ -39,7 +39,7 @@ const editfilm = async(name, newmovieName) => {
 
         const film = await Film.update(
             {name: newmovieName},
-            {where: {id}}
+            {where: {name}}
         );
 
         const noResult = (currentValue) => currentValue === 0;
@@ -47,19 +47,19 @@ const editfilm = async(name, newmovieName) => {
         if(film.length === 1 && film.every(noResult)){
             throw new Error("No movie under this name");
         }        
-        console.log(`Edited: ${name} to ${newmovieName}`);
+        console.log(`Edited: {req.body.name} to {newmovieName}`);
 
 }
 
-const removefilm = async(id) => { 
+const removefilm = async(name) => { 
 
-        const film = await Film.destroy({where: {id}});
+        const film = await Film.destroy({where: {name}});
         console.log(film);
 
-        if(user === 0){
+        if(film === 0){
             throw new Error("No film deleted!");
         }        
-        console.log(`Removed: ${film} `);
+        console.log(`Removed: {req.body.name} `);
 }
 
 module.exports = {

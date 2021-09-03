@@ -7,7 +7,7 @@ router.get("/movie", async(req, res)=>{
    res.status(200).json({"message":await listfilms()});
 });
 
-router.get("/:idmovie", async (req, res)=>{
+router.get("/:id/movie", async (req, res)=>{
     console.log(req.params.id);
     res.status(200).json({"message":await findfilm(req.params.id)});
 });

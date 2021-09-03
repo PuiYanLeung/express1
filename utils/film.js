@@ -39,9 +39,10 @@ const editfilm = async(name, newmovieName) => {
 
         const film = await Film.update(
             {name: newmovieName},
-            {where: {name}}
+            {where: {name: name}}
+            
         );
-
+console.log("movie chaged")
         const noResult = (currentValue) => currentValue === 0;
 
         if(film.length === 1 && film.every(noResult)){

@@ -29,6 +29,7 @@ const register = async (email, password, done) => {
 };
 // verify
 const verify = async (token, done) => {
+  console.log(`inside authenticate.verify`);
   try {
     done(null, token.user);
   } catch (error) {
@@ -38,28 +39,26 @@ const verify = async (token, done) => {
 
 const login = async (email, password, done) => {
   try {
-    const user = await User.findOne({ where: { email } });
+   const user = await User.findOne({ where: { email: email } });
 
+    //const user = await User.findOne({or: [{email: email}, {username: email}]});
+console.log(user);
     if (!user) {
       return done(null, false, { msg: "Incorrect Email" });
     }
 
     const match = await bcrypt.compare(password, user.passwordHash);
-    return match
-      ? done(null, user)
-      : done(null, false, { msg: "Incorrect Password" });
+    return match ? done(null, user) : done(null, false, { msg: "Incorrect Password" });
+console.log(match);
   } catch (error) {
     done(error);
   }
 };
 
-const verifyStrategy = new JWTStrategy(
-  {
+const verifyStrategy = new JWTStrategy({
     secretOrKey: process.env.SECRET_KEY,
     jwtFromRequest: ExtractJWT.fromUrlQueryParameter("secret_token"),
-  },
-  verify
-);
+  },verify);
 
 const registerStrategy = new LocalStrategy(
   { usernameField: "email", passwordField: "password" },

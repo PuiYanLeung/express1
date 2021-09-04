@@ -21,7 +21,7 @@ router.post("/addmovie", async(req, res) => {
 
 router.put("/editfilm", async (req, res) => {
     try {
-        await editfilm(req.body.name, req.body.newmovieName);
+        await editfilm(req.body.id, req.body.newmovieName);
         res.status(201).json({"message": "Edited movie"});
     } catch (err) {
         res.status(404).json({ "message": "movie does not exist" });

@@ -1,7 +1,6 @@
 {
   "name": "moviebase-backend",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -33,5 +32,7 @@
   "bugs": {
     "url": "https://github.com/PuiYanLeung/express1/issues"
   },
-  "homepage": "https://github.com/PuiYanLeung/express1#readme"
+  "homepage": "https://github.com/PuiYanLeung/express1#readme",
+  "keywords": [],
+  "description": ""
 }

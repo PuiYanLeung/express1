@@ -2,7 +2,7 @@ const Film = require("../models/film");
 
 const addfilm = async(req, res) => {
     try {
-        const newfilm = await Film.build({ name: req.body.name, genre: req.body.genre,lang:  req.body.lang, year: req.body.year, duration: req.body.duration,director: req.body.director, rating: req.body.rating,}); 
+        const newfilm = await Film.build({ name: req.body.name, genre: req.body.genre,lang:  req.body.lang, year: req.body.year, duration: req.body.duration,director: req.body.director, rating: req.body.rating}); 
         await newfilm.save();
     } catch(error) {
         console.log(error);
@@ -12,7 +12,7 @@ const addfilm = async(req, res) => {
 const listfilms = async() => {
     try {
         return await Film.findAll({
-            attributes: ({ name: req.body.name, genre: req.body.genre,lang:  req.body.lang, year: req.body.year, duration: req.body.duration,director: req.body.director, rating: req.body.rating,})
+            attributes: ({ name: req.body.name, genre: req.body.genre,lang:  req.body.lang, year: req.body.year, duration: req.body.duration,director: req.body.director, rating: req.body.rating})
         });
     } catch(error) {
         console.log(error);
@@ -35,14 +35,14 @@ const findfilm = async(id) => {
     }
 }
 
-const editfilm = async(name, newmovieName) => { 
+const editfilm = async(id, newmovieName) => { 
 
         const film = await Film.update(
             {name: newmovieName},
-            {where: {name: name}}
+            {where: {id}}
             
         );
-console.log("movie chaged")
+//console.log("movie chaged")
         const noResult = (currentValue) => currentValue === 0;
 
         if(film.length === 1 && film.every(noResult)){
@@ -52,10 +52,10 @@ console.log("movie chaged")
 
 }
 
-const removefilm = async(name) => { 
+const removefilm = async(id) => { 
 
-        const film = await Film.destroy({where: {name}});
-        console.log(film);
+        const film = await Film.destroy({where: {id}});
+        //console.log(film);
 
         if(film === 0){
             throw new Error("No film deleted!");

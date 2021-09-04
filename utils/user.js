@@ -31,7 +31,7 @@ const findOneUser = async(id) => {
 const editUser = async(id, newEmail) => { 
 
         const user = await User.update(
-            {name: newEmail},
+            {email: newEmail},
             {where: {id}}
         );
 

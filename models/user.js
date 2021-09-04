@@ -19,14 +19,4 @@ const User = connection.define(
   }
 );
 
-const main = async() =>{
-    try{
-        await User.sync({alter: true});
-    }catch(error){
-        console.log(error);
-    }
-}
-
-main();
-
 module.exports = User;

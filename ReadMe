@@ -1,0 +1,22 @@
+Register function URL: http://localhost/user/register
+JSON input
+{
+	"email": "test@abc.com",
+	"password": "password",
+	"checkPassword": "password"
+}
+
+201 Created
+{
+  "msg": "registered successfully",
+  "user_id": 11,
+  "user_email": "test@abc.com"
+}
+
+401 Unauthorized
+{
+  "msg": "User already exists"
+}
+
+
+

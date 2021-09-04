@@ -16,25 +16,26 @@ router.get("/:id", async (req, res)=>{
 
 
 const profile = async (req, res, next) => {
-  res
-    .status(200)
-    .json({ msg: "Profile", user: req.user, token: req.query.secret_token });
+  res.status(200).json({ msg: "Profile", user: req.user, token: req.query.secret_token });
 };
 
 const register = async (req, res, next) => {
   console.log(req.body);
   req.user.email
-    ? res.status(201).send({ msg: "registered successfully", user: req.user })
+    ? res.status(201).send({ msg: "registered successfully", user_id: req.user.id, user_email: req.user.email })
     : res.status(401).send({ msg: "User already exists" });
 };
 
 
 const login = async (req, res, next) => {
+  console.log(`entering login function`);
   passport.authenticate("login", async (err, user, info) => {
     try {
+      console.log(`login function checking`);
       if (err) {
         res.status(500).json({ msg: "Internal Server Error", err });
       } else if (!user) {
+        console.log(user);
         res.status(401).json({ msg: "User not found" });
       } else {
         const fn = async (error) => {

@@ -1,5 +1,5 @@
 Register function URL: http://localhost/user/register
-JSON input
+POST JSON
 {
 	"email": "test@abc.com",
 	"password": "password",
@@ -18,5 +18,66 @@ JSON input
   "msg": "User already exists"
 }
 
+Login function URL: http://localhost/user/login
+POST JSON
+{
+	"username": "test@abc.com",
+	"password": "password"
+}
 
+200 OK
+{
+  "msg": "login successfully",
+  "user": {
+    "id": 2,
+    "email": "test@abc.com"
+  },
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoyLCJlbWFpbCI6InRlc3RAYWJjLmNvbSJ9LCJpYXQiOjE2MzA3NTA0NTB9.VwRWd3f6f7rQxOleXhk52cFxIHFYz8ZfehYeDqwfP-4"
+}
 
+401 Unauthorized
+{
+  "msg": "User not found"
+}
+
+Find One User function URL: http://localhost/user/finduser
+GET JSON
+{
+	"id": "1"
+}
+
+200 OK
+{
+  "finduser successfully": {
+    "id": 1,
+    "email": "jimmy@abc.com"
+  }
+}
+
+Edit function URL: http://localhost/user/edit
+PUT JSON
+{
+	"id": 1,
+	"newEmail": "jimmy@abc.com"
+}
+
+401 Unauthorized
+{
+  "msg": "User not found"
+}
+
+Delete function URL:http://localhost/user/delete
+DELETE JSON
+{
+	"id": 1
+}
+
+200 OK
+{
+  "message": "delete user successfully"
+}
+
+401 Unauthorized
+{
+  "message": "User not found"
+}

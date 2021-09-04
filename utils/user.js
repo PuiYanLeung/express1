@@ -3,7 +3,8 @@ const User = require("../models/user");
 const listUsers = async() => {
     try {
         return await User.findAll({
-            attributes: [ "email"]
+           attributes: [ "email"]
+          //  attributes: [ "name"]
         });
     } catch(error) {
         console.log(error);
@@ -15,12 +16,12 @@ const listUsers = async() => {
 const findOneUser = async(id) => {
     try {
         const user = await User.findOne({
-            attributes: [ "email"],
+            attributes: [ "id", "email"],
+            //attributes: [ "name"],
             where: {id}
         });
         return user;
-        // const {passwordHash, ...data} = user;
-        // return data;
+
     } catch(error) {
         console.log(error);
         return [];
@@ -29,9 +30,11 @@ const findOneUser = async(id) => {
 
 //edit User
 const editUser = async(id, newEmail) => { 
+//const editUser = async(id, name) => { 
 
         const user = await User.update(
             {email: newEmail},
+            //{name},
             {where: {id}}
         );
 
@@ -41,6 +44,7 @@ const editUser = async(id, newEmail) => {
             throw new Error("No user edited!");
         }        
         console.log(`Edited: ${user} user ${newEmail}`);
+        //console.log(`Edited: ${user} user ${name}`);
 
 }
 
@@ -48,7 +52,7 @@ const editUser = async(id, newEmail) => {
 const removeUser = async(id) => { 
 
         const user = await User.destroy({where: {id}});
-        console.log(user);
+        //console.log(user);
 
         if(user === 0){
             throw new Error("No user deleted!");

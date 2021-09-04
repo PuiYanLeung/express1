@@ -9,6 +9,11 @@ const User = connection.define(
        allowNull: false
     },
 
+    // name: {
+    //   type: DataTypes.STRING,
+    //    allowNull: false
+    // },
+
     passwordHash: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -16,6 +21,7 @@ const User = connection.define(
   },
   {
     indexes: [{ unique: true, fields: ["email"] }],
+    //indexes: [{ unique: true, fields: ["name"] }],
   }
 );
 

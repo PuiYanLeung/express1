@@ -6,16 +6,20 @@ const LocalStrategy = require("passport-local").Strategy;
 const User = require("./models/user");
 // register
 const register = async (email, password, done) => {
+//const register = async (name, password, done) => {
   const saltRounds = 10;
 
   try {
     if (!email) {
-      throw new Error("A email was not provided");
+    //if (!name) {
+      throw new Error("An email was not provided");
+      //throw new Error("A name was not provided");
     }
 
     const salt = await bcrypt.genSalt(saltRounds);
     const hash = await bcrypt.hash(password, salt);
     const user = await User.build({ email, passwordHash: hash });
+    //const user = await User.build({ name, passwordHash: hash });
 
     try {
       await user.save();
@@ -37,19 +41,20 @@ const verify = async (token, done) => {
   }
 };
 
-const login = async (email, password, done) => {
+//const login = async (email, password, done) => {
+const login = async(username, password, done) =>{
   try {
-   const user = await User.findOne({ where: { email: email } });
+   const user = await User.findOne({ where: { email: username} });
+   //const user = await User.findOne({where:{name: username}});
 
-    //const user = await User.findOne({or: [{email: email}, {username: email}]});
-console.log(user);
     if (!user) {
       return done(null, false, { msg: "Incorrect Email" });
+      //return done(null, false, {msg:"Incorrect Username"});
     }
 
     const match = await bcrypt.compare(password, user.passwordHash);
     return match ? done(null, user) : done(null, false, { msg: "Incorrect Password" });
-console.log(match);
+
   } catch (error) {
     done(error);
   }
@@ -64,6 +69,7 @@ const registerStrategy = new LocalStrategy(
   { usernameField: "email", passwordField: "password" },
   register
 );
+//const registerStrategy = new LocalStrategy({usernameField: 'name', passwordField: 'password'}, register);
 
 const loginStrategy = new LocalStrategy(login);
 

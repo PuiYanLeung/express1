@@ -11,6 +11,7 @@ const Film = require("./models/film");
 const indexRouter = require("./routes/index");
 const errorRouter = require("./routes/error");
 const userRouter = require("./routes/user");
+const filmRouter = require("./routes/film");
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -23,6 +24,7 @@ passport.use(verifyStrategy);
 
 app.use("/", indexRouter);
 app.use("/user", userRouter);
+app.use("/film", filmRouter);
 app.use("*", errorRouter); // Use error router here
 
 app.listen(process.env.HTTP_PORT || 5000, async () => {

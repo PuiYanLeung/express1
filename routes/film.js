@@ -1,40 +1,43 @@
 const express = require("express");
- const { addfilm, removefilm, findfilm, editfilm, listfilms} = require("../utils/film");
+const { filmAPI, addfilm, removefilm, findfilm, editfilm, listfilms} = require("../utils/film");
 
 const router = express.Router();
 
-router.get("/movie", async(req, res)=>{
-   res.status(200).json({"message":await listfilms()});
+router.post("/movieAPI", async() => {
+  await filmAPI();
+  res.status(201).json({"message": "Created movie API successfully"});
 });
 
-router.get("/:id/movie", async (req, res)=>{
-    console.log(req.params.id);
-    res.status(200).json({"message":await findfilm(req.params.id)});
+router.get("/listmovie", async(req, res)=>{
+   res.status(200).json(await listfilms());
+});
+
+router.get("/findmovie", async (req, res)=>{
+    res.status(200).json({"findmovie successfully":await findfilm(req.body.id)});
 });
 
 
 router.post("/addmovie", async(req, res) => {
     await addfilm(req, res);
-    res.status(201).json({"message": "Created a movie"});
+    res.status(201).json({"message": "Created a movie successfully"});
 });
-   
-
-router.put("/editfilm", async (req, res) => {
+  
+router.put("/editmovie", async (req, res) => {
     try {
-        await editfilm(req.body.id, req.body.newmovieName);
-        res.status(201).json({"message": "Edited movie"});
+        await editfilm(req.body.id, req.body.newName);
+        res.status(201).json({msg: "edit movie successfully"});
     } catch (err) {
-        res.status(404).json({ "message": "movie does not exist" });
+        res.status(404).json({ msg: "movie does not exist" });
     }
   });
 
   /* Delete replace value */
 router.delete("/deletemovie", async (req, res) => {
     try {
-        await removefilm(req.body.name);
-        res.status(200).json({"message": "movie deleted"});
+        await removefilm(req.body.id);
+        res.status(200).json({msg: "delete movie successfully"});
     } catch (err) {
-      res.status(404).json({ "message": "movie does not exist" });
+      res.status(404).json({ msg: "movie does not exist" });
     }
   });
 

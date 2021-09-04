@@ -10,32 +10,28 @@ const Film = connection.define("Film", {
     genre: {
         type: DataTypes.STRING
     },
-    lang: {
-        type: DataTypes.STRING
-    },
     year: {
         type: DataTypes.INTEGER
     },
     duration: {
         type: DataTypes.INTEGER
     },
+    restriction: {
+        type: DataTypes.STRING
+    },
     director: {
+        type: DataTypes.STRING
+    },
+    casting: {
         type: DataTypes.STRING
     },
     rating: {
         type: DataTypes.INTEGER,
         validate: { min: 1, max: 5 }
-    }/*, 
-    userId: {
-        type: DataTypes.INTEGER,
-         references: {
-             model: User,
-             key: 'id'
-         }
-    }*/
+    },
+    photoURL:{
+        type: DataTypes.STRING
+    }
 }, {});
-
-// Film.hasOne(User);
-// User.belongsTo(Film);
 
 module.exports = Film;

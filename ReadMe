@@ -201,3 +201,106 @@ DELETE JSON
 {
   "msg": "movie does not exist"
 }
+
+Add WatchList function URL: http://localhost/watchlist/addwatchlist
+POST JSON
+{
+	"UserId" : "2",
+	"FilmId" : "11"
+}
+
+201 Created
+{
+  "message": "Add a movie into WatchList successfully",
+  "watchlist_id": 14
+}
+
+Find WatchList function URL: http://localhost/watchlist/findwatchlist
+GET JSON
+{
+	"UserId" : "5"
+}
+
+200 OK
+{
+  "findWatchList successfully": [
+    {
+      "id": 10,
+      "name": "No Country for Old Men",
+      "genre": "Crime,Drama",
+      "lang": "English",
+      "filmyear": 2007,
+      "duration": "122",
+      "restriction": "15",
+      "director": "Ethan Coen",
+      "casting": "Tommy Lee Jones, Javier Bardem",
+      "rating": 3,
+      "photoURL": "https://upload.wikimedia.org/wikipedia/en/8/8b/No_Country_for_Old_Men_poster.jpg",
+      "image": "Nocountryforoldmen.jpg",
+      "WatchLists": [
+        {
+          "id": 8,
+          "UserId": 5,
+          "FilmId": 10,
+          "createdAt": "2021-09-05T17:04:16.000Z",
+          "updatedAt": "2021-09-05T17:04:16.000Z"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Das Boot",
+      "genre": "Drama",
+      "lang": "German",
+      "filmyear": 1981,
+      "duration": "149",
+      "restriction": "12",
+      "director": "Wolfgang Petersen",
+      "casting": "J?rgen Prochnow, Herbert Gr?nemeyer",
+      "rating": 3,
+      "photoURL": "https://upload.wikimedia.org/wikipedia/en/a/a3/Das_boot_ver1.jpg",
+      "image": "Dasboot.jpg",
+      "WatchLists": [
+        {
+          "id": 9,
+          "UserId": 5,
+          "FilmId": 11,
+          "createdAt": "2021-09-05T17:04:20.000Z",
+          "updatedAt": "2021-09-05T17:04:20.000Z"
+        }
+      ]
+    }
+  ]
+}
+
+Delete Movie from WatchList function URL: http://localhost/watchlist/deletefilmfromWatchList
+DELETE JSON
+{
+	"id" : "4"	
+}
+
+200 OK
+{
+  "msg": "delete a film from WatchList successfully"
+}
+
+404 Not Found
+{
+  "msg": "WatchList does not exist"
+}
+
+Remove all movies from User's WatchList function URL: http://localhost/watchlist/removeuserwatchlist
+DELETE JSON
+{
+	"UserId" : 5
+}
+
+200 OK
+{
+  "msg": "delete WatchList successfully"
+}
+
+404 Not Found
+{
+  "msg": "WatchList does not exist"
+}

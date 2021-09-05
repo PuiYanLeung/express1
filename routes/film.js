@@ -1,12 +1,7 @@
 const express = require("express");
-const { filmAPI, addfilm, removefilm, findfilm, editfilm, listfilms} = require("../utils/film");
+const { addfilm, removefilm, findfilm, editfilm, listfilms} = require("../utils/film");
 
 const router = express.Router();
-
-router.post("/movieAPI", async() => {
-  await filmAPI();
-  res.status(201).json({"message": "Created movie API successfully"});
-});
 
 router.get("/listmovie", async(req, res)=>{
    res.status(200).json(await listfilms());
@@ -18,8 +13,8 @@ router.get("/findmovie", async (req, res)=>{
 
 
 router.post("/addmovie", async(req, res) => {
-    await addfilm(req, res);
-    res.status(201).json({"message": "Created a movie successfully"});
+    const movie_id = await addfilm(req, res);
+    res.status(201).json({"message": "Created a movie successfully", "movie_id": movie_id});
 });
   
 router.put("/editmovie", async (req, res) => {

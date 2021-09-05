@@ -10,11 +10,14 @@ const Film = connection.define("Film", {
     genre: {
         type: DataTypes.STRING
     },
-    year: {
+    lang: {
+        type: DataTypes.STRING
+    },
+    filmyear: {
         type: DataTypes.INTEGER
     },
     duration: {
-        type: DataTypes.INTEGER
+        type: DataTypes.STRING
     },
     restriction: {
         type: DataTypes.STRING
@@ -30,6 +33,9 @@ const Film = connection.define("Film", {
         validate: { min: 1, max: 5 }
     },
     photoURL:{
+        type: DataTypes.STRING
+    },
+    image:{
         type: DataTypes.STRING
     }
 }, {});

@@ -1,23 +1,22 @@
 const Film = require("../models/film");
 
-const filmAPI = async() => {
-    try {
-        const newfilm1 = await Film.build({name: "Tenet", genre: "Science Fiction", year: 2020, duration: 143, restriction: "12", director: "Christopher Nolan", casting: "John David Washington, Robert Pattinson", rating: 4, photoURL: "https://upload.wikimedia.org/wikipedia/en/1/14/Tenet_movie_poster.jpg"}); 
-        const newfilm2 = await Film.build({name: "Tenet2", genre: "Science Fiction", year: 2020, duration: 143, restriction: "12", director: "Christopher Nolan", casting: "John David Washington, Robert Pattinson", rating: 4, photoURL: "https://upload.wikimedia.org/wikipedia/en/1/14/Tenet_movie_poster.jpg"}); 
-        const newfilm3 = await Film.build({name: "Tenet3", genre: "Science Fiction", year: 2020, duration: 143, restriction: "12", director: "Christopher Nolan", casting: "John David Washington, Robert Pattinson", rating: 4, photoURL: "https://upload.wikimedia.org/wikipedia/en/1/14/Tenet_movie_poster.jpg"});         
-           
-        await newfilm1.save();
-        await newfilm2.save();
-        await newfilm3.save();
-    } catch(error) {
-        console.log(error);
-    }
-}
-
 const addfilm = async(req, res) => {
     try {
-        const newfilm = await Film.build({name: req.body.name, genre: req.body.genre, year: req.body.year, duration: req.body.duration, restriction: req.body.restriction, director: req.body.director, casting: req.body.casting, rating: req.body.rating, photoURL: req.body.photoURL}); 
+        const newfilm = await Film.build({
+            name: req.body.name, 
+            genre: req.body.genre, 
+            lang: req.body.lang,
+            filmyear: req.body.year, 
+            duration: req.body.duration, 
+            restriction: req.body.restriction, 
+            director: req.body.director, 
+            casting: req.body.casting, 
+            rating: req.body.rating, 
+            photoURL: req.body.photoURL,
+            image: req.body.image}); 
         await newfilm.save();
+
+        return newfilm.id;
     } catch(error) {
         console.log(error);
     }
@@ -73,7 +72,6 @@ const removefilm = async(id) => {
 }
 
 module.exports = {
-    filmAPI,
     addfilm,
     listfilms,
     findfilm,
